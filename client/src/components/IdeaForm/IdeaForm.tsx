@@ -5,7 +5,7 @@ import { CardProps, customStyles, OptionType } from "../../utils";
 import { dropdownOptions } from "../../utils/data";
 import "./ideaForm.css";
 import Card from "../card/card";
-import { randomUUID } from "crypto";
+import { v4 as uuidv4 } from "uuid";
 
 const url = import.meta.env.VITE_SERVER_URL || "";
 
@@ -43,7 +43,7 @@ const IdeaForm = () => {
     });
 
     const formData = {
-      requestId: randomUUID(),
+      requestId: uuidv4(),
       techStacks,
       projectLevel: selectedOptions["Project Level"].map((item) => item.value),
       audience: selectedOptions.Audience.map((item) => item.value),
