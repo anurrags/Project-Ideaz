@@ -8,6 +8,7 @@ export interface CardProps {
   Description: string;
   Features: string[];
   UseCases: string[];
+  Examples: string[];
   Monetisation_Strategy: string[];
   Technologies: string[];
 }

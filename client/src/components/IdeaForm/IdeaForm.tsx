@@ -6,11 +6,13 @@ import { dropdownOptions } from "../../utils/data";
 import "./ideaForm.css";
 import Card from "../card/card";
 import { v4 as uuidv4 } from "uuid";
+import { PropagateLoader } from "react-spinners";
 
 const url = import.meta.env.VITE_SERVER_URL || "";
 
 const IdeaForm = () => {
   const [ideas, setIdeas] = useState<CardProps[] | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
   const [selectedOptions, setSelectedOptions] = useState<{
     [key: string]: MultiValue<OptionType>;
   }>({
@@ -36,6 +38,8 @@ const IdeaForm = () => {
     };
 
   const handleButtonClick = async () => {
+    setLoading(true);
+    setIdeas(null);
     var techStacks: string[] = [];
     Object.entries(selectedOptions).map(([key, valueArray]) => {
       if (key !== "Project Level" && key !== "Audience")
@@ -48,14 +52,19 @@ const IdeaForm = () => {
       projectLevel: selectedOptions["Project Level"].map((item) => item.value),
       audience: selectedOptions.Audience.map((item) => item.value),
     };
-
-    const response = await axios.post(url, formData);
-    if (response.data.message.error !== "") {
-      alert(response.data.message.error);
-      return;
+    try {
+      const response = await axios.post(url, formData);
+      if (response.data.message.error !== "") {
+        alert(response.data.message.error);
+        setLoading(false);
+        return;
+      }
+      const data: CardProps[] = response.data.message.result;
+      setIdeas(data);
+    } catch (error) {
+      console.log(error);
     }
-    const data: CardProps[] = response.data.message.result;
-    setIdeas(data);
+    setLoading(false);
   };
   return (
     <>
@@ -81,20 +90,29 @@ const IdeaForm = () => {
           ))}
         </div>
         <div className="form-btn-container">
-          <button
-            className="idea-form-submit-btn"
-            type="submit"
-            onClick={handleButtonClick}
-          >
-            Submit
-          </button>
+          {loading ? (
+            <PropagateLoader
+              loading
+              size={20}
+              speedMultiplier={1}
+              color="aqua"
+            />
+          ) : (
+            <button
+              className="idea-form-submit-btn"
+              type="submit"
+              onClick={handleButtonClick}
+            >
+              Submit
+            </button>
+          )}
         </div>
       </div>
       <div className="card-main-container">
         {ideas &&
           ideas.map((card, index) => (
-            <div className="card-container">
-              <Card {...card} key={index} />
+            <div className="card-container" key={index}>
+              <Card {...card} />
             </div>
           ))}
       </div>

@@ -6,6 +6,7 @@ const Card = ({
   Description,
   Features,
   UseCases,
+  Examples,
   Monetisation_Strategy,
   Technologies,
 }: CardProps) => {
@@ -29,6 +30,16 @@ const Card = ({
           ))}
         </ul>
       </div>
+      {Examples.length > 0 && (
+        <div>
+          <h3>Similar Projects:</h3>
+          <ul>
+            {Examples.map((projects, index) => (
+              <li key={index}>{projects}</li>
+            ))}
+          </ul>
+        </div>
+      )}
       {Monetisation_Strategy.length > 0 && (
         <div>
           <h3>Monetisation Strategy:</h3>

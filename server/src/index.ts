@@ -7,7 +7,11 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 const app = express();
 env.config();
 const corsOptions = {
-  origin: "http://localhost:5173",
+  origin: [
+    "http://localhost:5173",
+    "https://project-ideaz.netlify.app",
+    "https://project-ideaz.anurags.me",
+  ],
   methods: "*",
   allowedHeaders: "*",
 };
@@ -26,9 +30,9 @@ app.get("/", (req, res) => {
 app.post("/", async (req, res) => {
   const data = req.body;
 
-  const tempQuery = `Please give 4 project ideas using technologies as: ${data.techStacks} and level of project using this tech stacks should be ${data.projectLevel}. Please don't suggest any project using tech stacks not mentioned in this query and kindly pay attention to the level of project. The project should be intended for: ${data.audience}
+  const tempQuery = `Please give 4 project ideas using technologies as: ${data.techStacks} and level of project using this tech stacks should be ${data.projectLevel}. Please don't suggest any project using tech stacks not mentioned in this query and this is a very important point. Kindly pay attention to the level of project. The project should be intended for: ${data.audience}. Also provide the example projects similar to the idea you provided which are currently live or may be competitor to your suggested project.
   Return your answer in form of a json object containing fields as:
-{result:[{Title:string, Description:string, Features:string[], UseCases:string[], Monetisation_Strategy:string[],Technologies:string[]}], error: string}
+{result:[{Title:string, Description:string, Features:string[], UseCases:string[], Monetisation_Strategy:string[], Examples:string[],Technologies:string[]}], error: string}
  Write description for atleast 100 words. If anything in above query is missing or undefined, just ignore it and answer in the given format and if you are not able to answer in the given format due to any reason add your message in the error field of json and keep other fields as empty but maintain the message json format or else keep error field as empty.`;
 
   console.log(`Received request for requestId: ${data.requestId}`, tempQuery);
@@ -36,7 +40,9 @@ app.post("/", async (req, res) => {
     const result: string = await run(tempQuery);
     const text = extractJsonString(result);
     const object = JSON.parse(text);
-    res.status(200).json({ status: "Success", message: object });
+    res
+      .status(200)
+      .json({ status: "Success", message: object, requestId: data.requestId });
   } catch (error) {
     console.log(error);
     res.status(201).json({ status: "Failure", message: `${error}` });
