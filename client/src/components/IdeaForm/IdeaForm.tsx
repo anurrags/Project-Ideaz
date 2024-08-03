@@ -7,7 +7,7 @@ import "./ideaForm.css";
 import Card from "../card/card";
 import { randomUUID } from "crypto";
 
-const url = import.meta.env.VITE_SERVER_URL || "http://localhost:9001";
+const url = import.meta.env.VITE_SERVER_URL || "";
 
 const IdeaForm = () => {
   const [ideas, setIdeas] = useState<CardProps[] | null>(null);
