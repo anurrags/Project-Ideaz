@@ -7,11 +7,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 const app = express();
 env.config();
 const corsOptions = {
-  origin: [
-    "http://localhost:5173",
-    "https://project-ideaz.netlify.app",
-    "https://project-ideaz.anurags.me",
-  ],
+  origin: "*",
   methods: "*",
   allowedHeaders: "*",
 };
