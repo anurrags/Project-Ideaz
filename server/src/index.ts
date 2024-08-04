@@ -6,12 +6,12 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const app = express();
 env.config();
-const corsOptions = {
-  origin: "*",
-  methods: "*",
-  allowedHeaders: "*",
-};
-app.use(cors(corsOptions));
+// const corsOptions = {
+//   origin: "*",
+//   methods: "*",
+//   allowedHeaders: "*",
+// };
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
