@@ -7,16 +7,22 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 const app = express();
 env.config();
 const corsOptions = {
-  origin: "*", // Allow all origins
-  methods: "*", // Allow all methods
-  allowedHeaders: "*", // Allow all headers
+  origin: [
+    "http://localhost:5173",
+    "https://project-ideaz.netlify.app",
+    "https://project-ideaz.anurags.me",
+  ],
+  methods: "*",
+  allowedHeaders: "*",
 };
 
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const genAI = new GoogleGenerativeAI("AIzaSyAlJVmsHvzf7_G9NOLeAvDZzodAFHkgZeY");
+const genAI = new GoogleGenerativeAI(
+  process.env.GEMINI_API_KEY || "Not valid key"
+);
 
 app.get("/", (req, res) => {
   res.send("Server is running");
