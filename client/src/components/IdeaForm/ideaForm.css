@@ -1,11 +1,11 @@
 .Idea-form-container {
   padding: 5rem;
-  width: 90vw;
 }
 .Idea-form-header-container {
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
 }
 .Idea-form-dropdown-container {
   display: grid;
@@ -40,11 +40,14 @@
 }
 
 .card-main-container {
+  margin: 0 auto;
   padding: 0 3rem;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   column-gap: 3rem;
   row-gap: 5rem;
+  align-items: center;
+  justify-items: center;
 }
 
 .card-container {
@@ -53,4 +56,27 @@
   border-radius: 8px;
   box-shadow: 2px -2px 20px rgb(100, 216, 255);
   background-color: #19003c;
+}
+
+@media (max-width: 900px) {
+  .Idea-form-dropdown-container {
+    gap: 3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .Idea-form-dropdown-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5rem;
+  }
+  .card-main-container {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+@media (max-width: 540px) {
+  .Idea-form-dropdown-container {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 2rem;
+  }
 }
