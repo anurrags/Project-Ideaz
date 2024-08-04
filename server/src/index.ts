@@ -15,7 +15,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const genAI = new GoogleGenerativeAI("AIzaSyAlJVmsHvzf7_G9NOLeAvDZzodAFHkgZeY");
+const genAI = new GoogleGenerativeAI("WRONG_KEY");
 
 app.get("/", (req, res) => {
   res.send("Server is running");
