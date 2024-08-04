@@ -6,16 +6,17 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const app = express();
 env.config();
-// const corsOptions = {
-//   origin: "*",
-//   methods: "*",
-//   allowedHeaders: "*",
-// };
-app.use(cors());
+const corsOptions = {
+  origin: "*", // Allow all origins
+  methods: "*", // Allow all methods
+  allowedHeaders: "*", // Allow all headers
+};
+
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const genAI = new GoogleGenerativeAI("WRONG_KEY");
+const genAI = new GoogleGenerativeAI("AIzaSyAlJVmsHvzf7_G9NOLeAvDZzodAFHkgZeY");
 
 app.get("/", (req, res) => {
   res.send("Server is running");
@@ -71,5 +72,5 @@ function extractJsonString(markdownString: string) {
 
 const PORT = process.env.PORT || 9001;
 app.listen(PORT, () => {
-  console.log("Server is running");
+  console.log(`Server is running at ${PORT}`);
 });
