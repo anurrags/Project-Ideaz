@@ -10,6 +10,7 @@ lerna-debug.log*
 .env
 .env.local
 
+ecosystem.config.js
 
 node_modules
 dist
